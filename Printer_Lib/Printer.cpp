@@ -7,6 +7,7 @@
 #include <winspool.h>
 #include <exception>
 #include <iostream>
+#include "Printer.h"
 
 using namespace std;
 

@@ -2,11 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Printer", "Printer\Printer.vcxproj", "{F377C1FC-EA2C-4599-84F2-11BF08CA1353}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A26FEA44-2E13-4287-801F-DAC79EE2A21F} = {A26FEA44-2E13-4287-801F-DAC79EE2A21F}
+	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Printer_Test2", "Printer_Test2\Printer_Test2.vcxproj", "{C0CD1895-48F8-4920-9AA9-1672FC2EB2E1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Printer_Test", "Printer_Test\Printer_Test.vcxproj", "{C0CD1895-48F8-4920-9AA9-1672FC2EB2E1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F377C1FC-EA2C-4599-84F2-11BF08CA1353} = {F377C1FC-EA2C-4599-84F2-11BF08CA1353}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Printer_Lib", "Printer_Lib\Printer_Lib.vcxproj", "{A26FEA44-2E13-4287-801F-DAC79EE2A21F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +27,10 @@ Global
 		{C0CD1895-48F8-4920-9AA9-1672FC2EB2E1}.Debug|Win32.Build.0 = Debug|Win32
 		{C0CD1895-48F8-4920-9AA9-1672FC2EB2E1}.Release|Win32.ActiveCfg = Release|Win32
 		{C0CD1895-48F8-4920-9AA9-1672FC2EB2E1}.Release|Win32.Build.0 = Release|Win32
+		{A26FEA44-2E13-4287-801F-DAC79EE2A21F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A26FEA44-2E13-4287-801F-DAC79EE2A21F}.Debug|Win32.Build.0 = Debug|Win32
+		{A26FEA44-2E13-4287-801F-DAC79EE2A21F}.Release|Win32.ActiveCfg = Release|Win32
+		{A26FEA44-2E13-4287-801F-DAC79EE2A21F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
