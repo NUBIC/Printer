@@ -36,6 +36,9 @@
     <ClInclude Include="Spooler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpoolException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

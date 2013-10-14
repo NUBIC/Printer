@@ -1,16 +1,12 @@
 #ifndef SPOOLER_H
 #define SPOOLER_H
 
-#include <string>
-
-using namespace std;
+#include <Windows.h>
 
 class Spooler {
-private:
-	string foo;
 
 public:
-	static bool spool(string printerName, string filePath);
+	static bool spool(LPTSTR printerName, LPTSTR filePath);
 
 };
 
