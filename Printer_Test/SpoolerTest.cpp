@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "Spooler.h"
+#include <exception>
 #include "SpoolException.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -10,7 +11,6 @@ static bool open  = false;
 static bool doc   = false;
 static bool page  = false;
 static bool write = false;
-
 
 BOOL WINAPI OpenPrinter(_In_opt_ LPWSTR n, _Out_ LPHANDLE h, _In_opt_  LPPRINTER_DEFAULTSW d) {
 	return open;
@@ -60,8 +60,14 @@ namespace Printer_Test
 		TEST_METHOD(TestInvalidFileThrowsException)
 		{
 			setSuccess(true, true, true, true);
-			auto func = [] () {return Spooler::spool(printer, L"invalid.doc");};
-			Assert::ExpectException<SpoolException>(func);
+			try {
+				Spooler::spool(printer, L"invalid.doc");
+				Assert::Fail(L"Should throw SpoolException");
+			} catch (SpoolException e) {
+				Assert::AreEqual("Failed reading the file 'invalid.doc'", e.what());
+			} catch (std::exception e) {
+				Assert::Fail(L"Should throw SpoolException");
+			}
 		}
 
 		TEST_METHOD(TestOpenPrinterFailureThrowsException)

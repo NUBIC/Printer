@@ -16,9 +16,10 @@ using namespace std;
  * 1. obtaining a handle to a printer or printer server
  * 2. notifying the spooler a document will be spooled
  * 3. notifying the spooler a page will be printed
- * 4. notifying the spooler the data should be written to the printer
- * 5. notifying the spooler at end of page
- * 6. notifying the spooler at end of document
+ * 4. reading the file
+ * 5. notifying the spooler the data should be written to the printer
+ * 6. notifying the spooler at end of page
+ * 7. notifying the spooler at end of document
  *
  * @param  <LPTSTR> printer name
  * @param  <LPTSTR> file path
@@ -29,7 +30,7 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 
 	HANDLE printerHandle = NULL;
 	if (!OpenPrinter(printerName, &printerHandle, NULL)) {
-		throw SpoolException("failed OpenPrinter");
+		throw SpoolException("Failed to obtain a handle to the printer or printer server");
 	}
 	
 	DWORD sd = 0;
@@ -40,13 +41,13 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	sd = StartDocPrinter(printerHandle, 1, (PBYTE)&docinfo);
 	if (!sd) {
 		ClosePrinter(printerHandle);
-		throw SpoolException("failed StartDocPrinter");
+		throw SpoolException("Failed to notify the spooler a document will be spooled");
 	}
 	
 	if (!StartPagePrinter(printerHandle)) {
 		EndDocPrinter(printerHandle);
 		ClosePrinter(printerHandle);
-		throw SpoolException("failed StartPagePrinter");
+		throw SpoolException("Failed to notify the spooler a page will be printed");
 	}
 	
 	HANDLE hFile = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -56,7 +57,10 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 		EndPagePrinter(printerHandle);
 		EndDocPrinter(printerHandle);
 		ClosePrinter(printerHandle);
-		throw SpoolException("failed CreateFile");
+
+		char buffer[1000];
+		sprintf_s(buffer, 1000, "Failed reading the file '%S'", filePath);
+		throw SpoolException(buffer);
 	}
 
 	char buffer[1024] = {0};
@@ -73,7 +77,7 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 			EndPagePrinter(printerHandle);
 			EndDocPrinter(printerHandle);
 			ClosePrinter(printerHandle);
-			throw SpoolException("failed WritePrinter");
+			throw SpoolException("Failed to notify the spooler the data should be written to the printer");
 		}
 
 		size -= dwRead;
