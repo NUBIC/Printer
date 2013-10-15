@@ -3,6 +3,7 @@
 #include <winspool.h>
 #include "Spooler.h"
 #include "SpoolException.h"
+#include "SpoolStatus.h"
 
 using namespace std;
 
@@ -18,28 +19,26 @@ using namespace std;
  * 3. notifying the spooler a page will be printed
  * 4. reading the file
  * 5. notifying the spooler the data should be written to the printer
- * 6. notifying the spooler at end of page
- * 7. notifying the spooler at end of document
  *
  * @param  <LPTSTR> printer name
  * @param  <LPTSTR> file path
  * @return <SpoolStatus> spool success
  * @throws <SpoolException>
  **/
-bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
+SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 
 	HANDLE printerHandle = NULL;
 	if (!OpenPrinter(printerName, &printerHandle, NULL)) {
 		throw SpoolException("Failed to obtain a handle to the printer or printer server");
 	}
 	
-	DWORD sd = 0;
+	DWORD printJobIdentifier = 0;
 	DOC_INFO_1 docinfo = {0};
 	docinfo.pDocName = L"MAR File";
 	docinfo.pDatatype = L"raw";
 
-	sd = StartDocPrinter(printerHandle, 1, (PBYTE)&docinfo);
-	if (!sd) {
+	printJobIdentifier = StartDocPrinter(printerHandle, printJobIdentifier, (PBYTE)&docinfo);
+	if (!printJobIdentifier) {
 		ClosePrinter(printerHandle);
 		throw SpoolException("Failed to notify the spooler a document will be spooled");
 	}
@@ -74,6 +73,7 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 		}
 				
 		if (!WritePrinter(printerHandle, buffer, (DWORD) sizeof(buffer), &dwWritten)) {
+			CloseHandle(hFile);
 			EndPagePrinter(printerHandle);
 			EndDocPrinter(printerHandle);
 			ClosePrinter(printerHandle);
@@ -83,10 +83,12 @@ bool Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 		size -= dwRead;
 	}
 
+	// TODO: Log the following when failure
 	CloseHandle(hFile);
 	EndPagePrinter(printerHandle);
 	EndDocPrinter(printerHandle);
 	ClosePrinter(printerHandle);
 
-	return true;
+	SpoolStatus* ss = new SpoolStatus(printJobIdentifier);
+	return ss;
 }

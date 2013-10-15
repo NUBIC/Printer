@@ -3,10 +3,12 @@
 
 #include <Windows.h>
 
+class SpoolStatus;
+
 class Spooler {
 
 public:
-	static bool spool(LPTSTR printerName, LPTSTR filePath);
+	static SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath);
 
 };
 

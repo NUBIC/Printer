@@ -3,14 +3,15 @@
 #include "Spooler.h"
 #include <exception>
 #include "SpoolException.h"
+#include "SpoolStatus.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 /* Stubbed Windows Print API Methods */
-static bool open  = false;
-static bool doc   = false;
-static bool page  = false;
-static bool write = false;
+static bool  open  = false;
+static DWORD doc   = 0;
+static bool  page  = false;
+static bool  write = false;
 
 BOOL WINAPI OpenPrinter(_In_opt_ LPWSTR n, _Out_ LPHANDLE h, _In_opt_  LPPRINTER_DEFAULTSW d) {
 	return open;
@@ -35,7 +36,7 @@ BOOL WINAPI WritePrinter( _In_ HANDLE  hPrinter, _In_reads_bytes_(cbBuf) LPVOID 
 
 /* Stubbed Windows Print API Methods */
 
-void setSuccess(bool openIn, bool docIn, bool pageIn, bool writeIn) {
+void setSuccess(bool openIn, DWORD docIn, bool pageIn, bool writeIn) {
 	open = openIn;
 	doc = docIn;
 	page = pageIn;
@@ -52,9 +53,9 @@ namespace Printer_Test
 	public:
 		TEST_METHOD(TestSuccess)
 		{
-			setSuccess(true, true, true, true);
-			bool status = Spooler::spool(printer, valid);
-			Assert::IsTrue(status);
+			setSuccess(true, 1337, true, true);
+			SpoolStatus* s = Spooler::spool(printer, valid);
+			Assert::AreEqual((DWORD) 1337, s->getPrintJobIdentifier());
 		}
 
 		TEST_METHOD(TestInvalidFileThrowsException)
@@ -79,7 +80,7 @@ namespace Printer_Test
 
 		TEST_METHOD(TestStartDocFailureThrowsException)
 		{
-			setSuccess(true, false, true, true);
+			setSuccess(true, 0, true, true);
 			auto func = [] () {return Spooler::spool(printer, valid);};
 			Assert::ExpectException<SpoolException>(func);
 		}
