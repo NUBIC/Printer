@@ -80,6 +80,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cli.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="Printer_Lib.h" />
     <ClInclude Include="Resource.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cli.cpp" />
     <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Printer_Lib.cpp" />
     <ClCompile Include="Spooler.cpp" />
