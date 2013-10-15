@@ -89,6 +89,5 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	EndDocPrinter(printerHandle);
 	ClosePrinter(printerHandle);
 
-	SpoolStatus* ss = new SpoolStatus(printJobIdentifier);
-	return ss;
+	return new SpoolStatus(printJobIdentifier);
 }
