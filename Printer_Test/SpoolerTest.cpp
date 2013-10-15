@@ -51,6 +51,7 @@ namespace Printer_Test
 	TEST_CLASS(SpoolerTest)
 	{
 	public:
+
 		TEST_METHOD(TestSuccess)
 		{
 			setSuccess(true, 1337, true, true);

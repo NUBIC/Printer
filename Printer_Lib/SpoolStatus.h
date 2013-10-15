@@ -1,4 +1,7 @@
 #pragma once
+
+#include <Windows.h>
+
 class SpoolStatus
 {
 private:

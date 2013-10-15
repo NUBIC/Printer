@@ -3,13 +3,13 @@
 #include <iostream>
 #include <wchar.h>
 #include <fstream>
+#include "Spooler.h"
+#include "SpoolStatus.h"
 
 using namespace std;
 
 Cli::Cli(int argc, _TCHAR* argv[]) {
 	this->argc = argc;
-	//_TCHAR** argvv;
-	//argvv = argv;
 	this->argv = argv;
 }
 void Cli::run() {
@@ -27,11 +27,13 @@ void Cli::run() {
 	}
 	
 	if (argc > 2) {
+		_TCHAR* arg1 = argv[1];
 		_TCHAR* arg2 = argv[2];
 		if (fileExists(arg2)) {
-			// Print
+			SpoolStatus* s = spool(arg1, arg2);
+			wcout << "Successfully spooled '"<< arg2 << "' to printer '" << arg1 << "'"<< endl;
+			wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
 		} else {
-			cout << endl;
 			wcout << "Failed to open the file '" << arg2 << "'" << endl;
 		}
 	}
@@ -42,16 +44,20 @@ bool Cli::isHelpSwitch(_TCHAR* arg) {
 }
 
 void Cli::help() {
-	cout << endl;
-	cout << "Sends a file to a printer and queries it's status" << endl;
-	cout << endl;
-	cout << "PRINTER [/h] <printer> <file>" << endl;
-	cout << "\t" << "/h" << "\t\t" << "Displays this help message" << endl;
-	cout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
-	cout << "\t" << "<file>" << "\t\t" << "The file to be printed" << endl;
+	wcout << endl;
+	wcout << "Sends a file to a printer and queries it's status" << endl;
+	wcout << endl;
+	wcout << "PRINTER [/h] <printer> <file>" << endl;
+	wcout << "\t" << "/h" << "\t\t" << "Displays this help message" << endl;
+	wcout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
+	wcout << "\t" << "<file>" << "\t\t" << "The file to be printed" << endl;
 }
 
 bool Cli::fileExists(_TCHAR* filename) {
 	ifstream ifile(filename);
 	return ifile != NULL;
+}
+
+SpoolStatus* Cli::spool(_TCHAR* arg1, _TCHAR* arg2) {
+	return Spooler::spool(arg1, arg2);
 }
