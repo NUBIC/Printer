@@ -37,7 +37,7 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	docinfo.pDocName = L"MAR File";
 	docinfo.pDatatype = L"raw";
 
-	printJobIdentifier = StartDocPrinter(printerHandle, printJobIdentifier, (PBYTE)&docinfo);
+	printJobIdentifier = StartDocPrinter(printerHandle, 1, (PBYTE)&docinfo);
 	if (!printJobIdentifier) {
 		ClosePrinter(printerHandle);
 		throw SpoolException("Failed to notify the spooler a document will be spooled");
