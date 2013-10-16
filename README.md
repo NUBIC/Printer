@@ -7,4 +7,5 @@ Usage
 =====
 
 Printer.exe "HP Deskjet" important.txt
-Printer.exe "\\x.x.x.x\Print Server" important.txt
+
+Printer.exe "\\\\x.x.x.x\Print Server" important.txt
