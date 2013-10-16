@@ -1,5 +1,4 @@
-#ifndef SPOOLER_H
-#define SPOOLER_H
+#pragma once
 
 #include <Windows.h>
 
@@ -8,8 +7,6 @@ class SpoolStatus;
 class Spooler {
 
 public:
-	static SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath);
+	SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath);
 
 };
-
-#endif /* SPOOLER_H */

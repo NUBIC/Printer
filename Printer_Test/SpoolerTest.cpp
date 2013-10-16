@@ -43,6 +43,11 @@ void setSuccess(bool openIn, DWORD docIn, bool pageIn, bool writeIn) {
 	write = writeIn;
 }
 
+SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath) {
+	Spooler* s = new Spooler();
+	return s->spool(printerName, filePath);
+}
+
 LPTSTR printer = printer;
 LPTSTR valid = L"../Printer_Test/valid.txt";
 
@@ -55,7 +60,7 @@ namespace Printer_Test
 		TEST_METHOD(TestSuccess)
 		{
 			setSuccess(true, 1337, true, true);
-			SpoolStatus* s = Spooler::spool(printer, valid);
+			SpoolStatus* s = spool(printer, valid);
 			Assert::AreEqual((DWORD) 1337, s->getPrintJobIdentifier());
 		}
 
@@ -63,7 +68,7 @@ namespace Printer_Test
 		{
 			setSuccess(true, true, true, true);
 			try {
-				Spooler::spool(printer, L"invalid.doc");
+				spool(printer, L"invalid.doc");
 				Assert::Fail(L"Should throw SpoolException");
 			} catch (SpoolException e) {
 				Assert::AreEqual("Failed reading the file 'invalid.doc'", e.what());
@@ -75,28 +80,28 @@ namespace Printer_Test
 		TEST_METHOD(TestOpenPrinterFailureThrowsException)
 		{
 			setSuccess(false, true, true, true);
-			auto func = [] () {return Spooler::spool(printer, valid);};
+			auto func = [] () {return spool(printer, valid);};
 			Assert::ExpectException<SpoolException>(func);
 		}
 
 		TEST_METHOD(TestStartDocFailureThrowsException)
 		{
 			setSuccess(true, 0, true, true);
-			auto func = [] () {return Spooler::spool(printer, valid);};
+			auto func = [] () {return spool(printer, valid);};
 			Assert::ExpectException<SpoolException>(func);
 		}
 
 		TEST_METHOD(TestStartPageFailureThrowsException)
 		{
 			setSuccess(true, true, false, true);
-			auto func = [] () {return Spooler::spool(printer, valid);};
+			auto func = [] () {return spool(printer, valid);};
 			Assert::ExpectException<SpoolException>(func);
 		}
 
 		TEST_METHOD(TestWritePrinterFailureThrowsException)
 		{
 			setSuccess(true, true, true, false);
-			auto func = [] () {return Spooler::spool(printer, valid);};
+			auto func = [] () {return spool(printer, valid);};
 			Assert::ExpectException<SpoolException>(func);
 		}
 

@@ -48,7 +48,7 @@ namespace Printer_Test
 			Assert::IsNotNull(found, msgBuffer);
 		}
 
-		TEST_METHOD(TestSuccessfulSpool)
+		/*TEST_METHOD(TestSuccessfulSpool)
 		{
 			std::wstringstream buffer;
 			std::wstreambuf* old = std::wcout.rdbuf(buffer.rdbuf());
@@ -71,7 +71,7 @@ namespace Printer_Test
 			wchar_t msgBuffer[1000];
 			swprintf(msgBuffer, L"Expected: %ls, Actual: %ls", expected, b);
 			Assert::IsNotNull(found, msgBuffer);
-		}
+		}*/
 
 	};
 }

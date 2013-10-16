@@ -11,7 +11,10 @@ using namespace std;
 Cli::Cli(int argc, _TCHAR* argv[]) {
 	this->argc = argc;
 	this->argv = argv;
+	this->spooler = new Spooler();
+
 }
+
 void Cli::run() {
 	if (argc == 1) {
 		help();
@@ -30,7 +33,7 @@ void Cli::run() {
 		_TCHAR* arg1 = argv[1];
 		_TCHAR* arg2 = argv[2];
 		if (fileExists(arg2)) {
-			SpoolStatus* s = spool(arg1, arg2);
+			SpoolStatus* s = spooler->spool(arg1, arg2);
 			wcout << "Successfully spooled '"<< arg2 << "' to printer '" << arg1 << "'"<< endl;
 			wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
 		} else {
@@ -58,6 +61,6 @@ bool Cli::fileExists(_TCHAR* filename) {
 	return ifile != NULL;
 }
 
-SpoolStatus* Cli::spool(_TCHAR* arg1, _TCHAR* arg2) {
-	return Spooler::spool(arg1, arg2);
+void Cli::setSpooler(Spooler* spooler) {
+	this->spooler = spooler;
 }
