@@ -31,19 +31,19 @@ void Cli::run() {
 	}
 	
 	if (argc > 2) {
-		_TCHAR* arg1 = argv[1];
-		_TCHAR* arg2 = argv[2];
-		if (fileExists(arg2)) {
+		_TCHAR* printer = argv[argc - 2];
+		_TCHAR* file    = argv[argc - 1];
+		if (fileExists(file)) {
 			try {
-				SpoolStatus* s = spooler->spool(arg1, arg2);
-				wcout << "Successfully spooled '"<< arg2 << "' to printer '" << arg1 << "'"<< endl;
+				SpoolStatus* s = spooler->spool(printer, file);
+				wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;
 				wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
 			} catch (SpoolException & e) {
 				wcout << e.what() << endl;
 				//TODO: Print stack from exception (StackWalker)
 			}
 		} else {
-			wcout << "Failed to open the file '" << arg2 << "'" << endl;
+			wcout << "Failed to open the file '" << file << "'" << endl;
 		}
 	}
 }

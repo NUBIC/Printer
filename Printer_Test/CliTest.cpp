@@ -42,13 +42,13 @@ namespace Printer_Test
 			Assert::IsNotNull(found, msgBuffer);
 		}
 
-		static void runCli(_TCHAR* argv[]) {
-			Cli *c = new Cli(sizeof(argv), argv);
+		static void runCli(_TCHAR* argv[], int argc) {
+			Cli *c = new Cli(argc, argv);
 			c->run();
 		}
 
-		static void runCli(_TCHAR* argv[], SpoolerInterface* s) {
-			Cli *c = new Cli(sizeof(argv), argv);
+		static void runCli(_TCHAR* argv[], int argc, SpoolerInterface* s) {
+			Cli *c = new Cli(argc, argv);
 			c->setSpooler(s);
 			c->run();
 		}
@@ -60,7 +60,7 @@ namespace Printer_Test
 				L"hp-printer",
 				L"invalid.txt"
 			};
-			runCli(argv);
+			runCli(argv, 3);
 			expectOutput(L"Failed to open the file 'invalid.txt'");
 		}
 
@@ -71,7 +71,7 @@ namespace Printer_Test
 				L"hp-printer",
 				L"../Printer_Test/valid.txt"
 			};
-			runCli(argv, new FakeSpooler());
+			runCli(argv, 3, new FakeSpooler());
 			expectOutput(L"Successfully spooled '../Printer_Test/valid.txt' to printer 'hp-printer'\nJob identifier is '123'");
 		}
 
@@ -82,10 +82,9 @@ namespace Printer_Test
 				L"hp-printer",
 				L"../Printer_Test/valid.txt"
 			};
-			runCli(argv);
+			runCli(argv, 4, new FakeSpooler());
 			expectOutput( L"{\"status\":\"success\", \"job_identifier\":\"123\"}");
 		}
-
 
 	};
 }
