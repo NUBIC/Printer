@@ -82,8 +82,6 @@
   <ItemGroup>
     <ClInclude Include="Cli.h" />
     <ClInclude Include="Printer.h" />
-    <ClInclude Include="Printer_Lib.h" />
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="Spooler.h" />
     <ClInclude Include="SpoolException.h" />
     <ClInclude Include="SpoolStatus.h" />
@@ -93,20 +91,12 @@
   <ItemGroup>
     <ClCompile Include="Cli.cpp" />
     <ClCompile Include="Printer.cpp" />
-    <ClCompile Include="Printer_Lib.cpp" />
     <ClCompile Include="Spooler.cpp" />
     <ClCompile Include="SpoolStatus.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Printer_Lib.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Printer_Lib.ico" />
-    <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
