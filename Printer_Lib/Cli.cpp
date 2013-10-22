@@ -16,6 +16,20 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
 
 }
 
+/**
+ * Interprets the arguments passed on the command-line.
+ *
+ * When /json switch is used the results are returned in
+ * JSON.
+ * 
+ * e.g.
+ * => Printer.exe /json "HP InkJet" my.doc
+ * => { "status":"success", print_job_identifier:123 }
+ * =>
+ * => Printer.exe /json "HP InkJet" badfile.doc
+ * => { "status":"failure", "message":"File does not exist"}
+ *
+ */
 void Cli::run() {
 	if (argc == 1) {
 		help();
@@ -38,7 +52,7 @@ void Cli::run() {
 				SpoolStatus* s = spooler->spool(printer, file);
 				if (containsJsonSwitch(argc, argv)) {
 					char* status = s->getStatus();
-					wcout << "{\"status\":\"" << status << "\", \"job_identifier\":"<< s-> getPrintJobIdentifier() << "}";
+					wcout << "{\"status\":\"" << status << "\", \"print_job_identifier\":"<< s-> getPrintJobIdentifier() << "}";
 				} else {
 					wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;
 					wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
@@ -52,7 +66,11 @@ void Cli::run() {
 				}
 			}
 		} else {
-			wcout << "Failed to open the file '" << file << "'" << endl;
+			if (containsJsonSwitch(argc, argv)) {
+				wcout << "{\"status\":\"failure\", \"message\":\"Failed to open the file '" << file << "'" << "\"}";
+			} else {
+				wcout << "Failed to open the file '" << file << "'" << endl;
+			}
 		}
 	}
 }
@@ -67,6 +85,7 @@ void Cli::help() {
 	wcout << endl;
 	wcout << "PRINTER [/h] <printer> <file>" << endl;
 	wcout << "\t" << "/h" << "\t\t" << "Displays this help message" << endl;
+	wcout << "\t" << "/json" << "\t" << "Returns results in JSON" << endl; 
 	wcout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
 	wcout << "\t" << "<file>" << "\t\t" << "The file to be printed" << endl;
 }

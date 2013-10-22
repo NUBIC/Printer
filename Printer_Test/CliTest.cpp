@@ -56,7 +56,7 @@ namespace Printer_Test
 				L"../Printer_Test/valid.txt"
 			};
 			runCli(argv, 4, new FakeSpooler());
-			expectOutput( L"{\"status\":\"success\", \"job_identifier\":123}");
+			expectOutput( L"{\"status\":\"success\", \"print_job_identifier\":123}");
 		}
 
 		TEST_METHOD(TestSpoolFailureWithJsonSwitch) {
@@ -68,6 +68,17 @@ namespace Printer_Test
 			};
 			runCli(argv, 4, new ExceptionalSpooler());
 			expectOutput( L"{\"status\":\"failure\", \"message\":\"I am exceptional!\"}");
+		}
+
+		TEST_METHOD(TestBadFileWithJsonSwitch) {
+			_TCHAR *argv[] = {
+				L"Printer",
+				L"/json",
+				L"hp-printer",
+				L"invalid.txt"
+			};
+			runCli(argv, 4, new FakeSpooler());
+			expectOutput( L"{\"status\":\"failure\", \"message\":\"Failed to open the file 'invalid.txt'\"}");
 		}
 
 		/* Helper Methods */
