@@ -8,8 +8,8 @@
 using namespace std;
 
 /**
- * This method allows you to instruct local print spooler
- * to write to the specified printer. A `SpoolStatus` is 
+ * This method instructs the local print spooler to write 
+ * a document to the specified printer. A `SpoolStatus` is 
  * returned which can be used to get success of the spooling 
  * operation or a job identifier.
  *

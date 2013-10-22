@@ -83,6 +83,7 @@
     <ClInclude Include="Cli.h" />
     <ClInclude Include="Printer.h" />
     <ClInclude Include="Spooler.h" />
+    <ClInclude Include="SpoolerInterface.h" />
     <ClInclude Include="SpoolException.h" />
     <ClInclude Include="SpoolStatus.h" />
     <ClInclude Include="stdafx.h" />

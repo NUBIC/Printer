@@ -67,6 +67,6 @@ bool Cli::fileExists(_TCHAR* filename) {
 	return ifile != NULL;
 }
 
-void Cli::setSpooler(Spooler* spooler) {
+void Cli::setSpooler(SpoolerInterface* spooler) {
 	this->spooler = spooler;
 }
