@@ -10,3 +10,11 @@ SpoolStatus::SpoolStatus(DWORD printJobIdentifier) {
 DWORD SpoolStatus::getPrintJobIdentifier() {
 	return this->printJobIdentifier;
 }
+
+bool SpoolStatus::isSuccessfull() {
+	return this->printJobIdentifier != NULL;
+}
+
+char* SpoolStatus::getStatus() {
+	return this->isSuccessfull() ? "success" : "failure";
+}

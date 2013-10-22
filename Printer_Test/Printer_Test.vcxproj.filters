@@ -24,6 +24,9 @@
     <ClInclude Include="FakeSpooler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExceptionalSpooler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FakeSpooler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExceptionalSpooler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

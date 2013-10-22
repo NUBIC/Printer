@@ -10,5 +10,7 @@ public:
 	SpoolStatus(DWORD printJobIdentifier);
 
 	DWORD getPrintJobIdentifier();
+	char* getStatus();
+	bool isSuccessfull();
 };
 

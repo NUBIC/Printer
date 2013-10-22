@@ -36,11 +36,20 @@ void Cli::run() {
 		if (fileExists(file)) {
 			try {
 				SpoolStatus* s = spooler->spool(printer, file);
-				wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;
-				wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
+				if (containsJsonSwitch(argc, argv)) {
+					char* status = s->getStatus();
+					wcout << "{\"status\":\"" << status << "\", \"job_identifier\":"<< s-> getPrintJobIdentifier() << "}";
+				} else {
+					wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;
+					wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
+				}
 			} catch (SpoolException & e) {
-				wcout << e.what() << endl;
-				//TODO: Print stack from exception (StackWalker)
+				if (containsJsonSwitch(argc, argv)) {
+					wcout << "{\"status\":\"failure\", \"message\":\"" << e.what() << "\"}";
+				} else {
+					wcout << e.what() << endl;
+					//TODO: Print stack from exception (StackWalker)
+				}
 			}
 		} else {
 			wcout << "Failed to open the file '" << file << "'" << endl;
@@ -49,7 +58,7 @@ void Cli::run() {
 }
 
 bool Cli::isHelpSwitch(_TCHAR* arg) {
-	return wcscmp(arg,L"/h") == 0;
+	return _wcsicmp(arg,L"/h") == 0;
 }
 
 void Cli::help() {
@@ -69,4 +78,14 @@ bool Cli::fileExists(_TCHAR* filename) {
 
 void Cli::setSpooler(SpoolerInterface* spooler) {
 	this->spooler = spooler;
+}
+
+bool Cli::containsJsonSwitch(int argc, _TCHAR* argv[]) {
+	bool result = false;
+	for(int i = 0; i < argc; i++) {
+		if (_wcsicmp(argv[i],L"/json") == 0) {
+			result = true;
+		}
+	}
+	return result;
 }

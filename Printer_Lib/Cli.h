@@ -19,5 +19,6 @@ public:
 	Cli(int argc, _TCHAR* argv[]);
 	void run();
 	void setSpooler(SpoolerInterface* spooler);
+	bool Cli::containsJsonSwitch(int argc, _TCHAR* argv[]);
 };
 
