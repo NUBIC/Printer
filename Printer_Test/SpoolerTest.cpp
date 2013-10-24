@@ -7,34 +7,14 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-/* Stubbed Windows Print API Methods */
+LPTSTR printer = printer;
+LPTSTR valid = L"../Printer_Test/valid.txt";
 static bool  open  = false;
 static DWORD doc   = 0;
 static bool  page  = false;
 static bool  write = false;
 
-BOOL WINAPI OpenPrinter(_In_opt_ LPWSTR n, _Out_ LPHANDLE h, _In_opt_  LPPRINTER_DEFAULTSW d) {
-	return open;
-}
-
-DWORD WINAPI StartDocPrinterW(
-_In_             HANDLE  h,
-_In_range_(1, 3) DWORD    l,
-_When_(Level == 1, _In_reads_bytes_(sizeof(DOC_INFO_1)))
-_When_(Level == 3, _In_reads_bytes_(sizeof(DOC_INFO_3))) LPBYTE  d
-) {
-	return doc;
-}
-
-BOOL WINAPI StartPagePrinter(_In_ HANDLE  hPrinter) {
-	return page;
-}
-
-BOOL WINAPI WritePrinter( _In_ HANDLE  hPrinter, _In_reads_bytes_(cbBuf) LPVOID  pBuf, DWORD   cbBuf, _Out_   LPDWORD pcWritten) {
-	return write;
-}
-
-/* Stubbed Windows Print API Methods */
+/* Helper Methods - Start */
 
 void setSuccess(bool openIn, DWORD docIn, bool pageIn, bool writeIn) {
 	open = openIn;
@@ -48,8 +28,7 @@ SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath) {
 	return s->spool(printerName, filePath);
 }
 
-LPTSTR printer = printer;
-LPTSTR valid = L"../Printer_Test/valid.txt";
+/* Helper Methods - End */
 
 namespace Printer_Test
 {		
@@ -106,4 +85,27 @@ namespace Printer_Test
 		}
 
 	};
+}
+
+/* Stubbed Windows Print API Methods */
+
+BOOL WINAPI OpenPrinter(_In_opt_ LPWSTR n, _Out_ LPHANDLE h, _In_opt_  LPPRINTER_DEFAULTSW d) {
+	return open;
+}
+
+DWORD WINAPI StartDocPrinterW(
+_In_             HANDLE  h,
+_In_range_(1, 3) DWORD    l,
+_When_(Level == 1, _In_reads_bytes_(sizeof(DOC_INFO_1)))
+_When_(Level == 3, _In_reads_bytes_(sizeof(DOC_INFO_3))) LPBYTE  d
+) {
+	return doc;
+}
+
+BOOL WINAPI StartPagePrinter(_In_ HANDLE  hPrinter) {
+	return page;
+}
+
+BOOL WINAPI WritePrinter( _In_ HANDLE  hPrinter, _In_reads_bytes_(cbBuf) LPVOID  pBuf, DWORD   cbBuf, _Out_   LPDWORD pcWritten) {
+	return write;
 }

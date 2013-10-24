@@ -24,9 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Printer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Spooler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,15 +39,9 @@
     <ClInclude Include="SpoolerInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Spooler.cpp">

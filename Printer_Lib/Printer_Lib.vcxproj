@@ -81,7 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cli.h" />
-    <ClInclude Include="Printer.h" />
     <ClInclude Include="Spooler.h" />
     <ClInclude Include="SpoolerInterface.h" />
     <ClInclude Include="SpoolException.h" />
@@ -91,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cli.cpp" />
-    <ClCompile Include="Printer.cpp" />
     <ClCompile Include="Spooler.cpp" />
     <ClCompile Include="SpoolStatus.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -91,3 +91,42 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 
 	return new SpoolStatus(printJobIdentifier);
 }
+
+/*
+ // Check Status
+ printerHandle = NULL;
+	if (!OpenPrinter(L"NPI6C6DB9 (HP LaserJet 500 colorMFP M570dn)", &printerHandle, NULL)) {
+		throw std::runtime_error("failed OpenPrinter");
+	}
+
+	JOB_INFO_1 *jobInfo = new JOB_INFO_1();
+
+	
+	DWORD pcbNeeded = NULL;
+	DWORD pcbNeeded2 = NULL;
+
+	for (int i = 0; i < 10; i++)
+	{
+		pcbNeeded = NULL;
+		pcbNeeded2 = NULL;
+		if (!GetJob(printerHandle,sd, 1, (LPBYTE)jobInfo, 0, &pcbNeeded)) {
+			if (!GetJob(printerHandle,sd, 1, (LPBYTE)jobInfo, pcbNeeded, &pcbNeeded2)) {
+				cout << "Failed GetJob: " << GetLastError() << endl;
+				//throw std::runtime_error("failed GetJob");
+			} else {
+				if ((jobInfo->Status & JOB_STATUS_COMPLETE) == JOB_STATUS_COMPLETE) {
+					cout << "Success" << endl;
+				} else {
+					cout << "Failed" << endl;
+				}
+			}
+		} else {
+			if (jobInfo->Status & JOB_STATUS_COMPLETE) {
+				cout << "Success" << endl;
+			} else {
+				cout << "Failed" << endl;
+			}
+		}
+		cin.get();
+	}
+*/
