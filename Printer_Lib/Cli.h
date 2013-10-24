@@ -13,7 +13,9 @@ private:
 	_TCHAR** argv;
 	SpoolerInterface* spooler;
 	void help();
+	void version();
 	bool isHelpSwitch(_TCHAR* arg);
+	bool isVersionSwitch(_TCHAR* arg);
 	bool fileExists(_TCHAR* filename);
 public:
 	Cli(int argc, _TCHAR* argv[]);

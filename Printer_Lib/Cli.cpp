@@ -6,6 +6,7 @@
 #include "Spooler.h"
 #include "SpoolStatus.h"
 #include "SpoolException.h"
+#include "Version.h"
 
 using namespace std;
 
@@ -41,7 +42,11 @@ void Cli::run() {
 		if (isHelpSwitch(arg1)) {
 			help();
 			return;
-		} 
+		}
+		if (isVersionSwitch(arg1)) {
+			version();
+			return;
+		}
 	}
 	
 	if (argc > 2) {
@@ -79,15 +84,24 @@ bool Cli::isHelpSwitch(_TCHAR* arg) {
 	return _wcsicmp(arg,L"/h") == 0;
 }
 
+bool Cli::isVersionSwitch(_TCHAR* arg) {
+	return _wcsicmp(arg,L"/version") == 0;
+}
+
 void Cli::help() {
 	wcout << endl;
 	wcout << "Sends a file to a printer and queries it's status" << endl;
 	wcout << endl;
-	wcout << "PRINTER [/h] <printer> <file>" << endl;
+	wcout << "PRINTER [/h] [/json] [/version] <printer> <file>" << endl;
 	wcout << "\t" << "/h" << "\t\t" << "Displays this help message" << endl;
-	wcout << "\t" << "/json" << "\t" << "Returns results in JSON" << endl; 
+	wcout << "\t" << "/json" << "\t\t" << "Displays results in JSON" << endl;
+	wcout << "\t" << "/version" << "\t" << "Displays version information" << endl;
 	wcout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
 	wcout << "\t" << "<file>" << "\t\t" << "The file to be printed" << endl;
+}
+
+void Cli::version() {
+	wcout << "Printer " << VERSION << endl;
 }
 
 bool Cli::fileExists(_TCHAR* filename) {
