@@ -51,7 +51,7 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
  * /version
  *   The version switch displays the version of the application
  *
- * /h
+ * /help
  *   The help switch prints a help message of how to use the application
  *
  */
@@ -105,7 +105,7 @@ void Cli::run() {
 }
 
 bool Cli::isHelpSwitch(_TCHAR* arg) {
-	return _wcsicmp(arg,L"/h") == 0;
+	return _wcsicmp(arg,L"/h") == 0 || _wcsicmp(arg,L"/help") == 0;
 }
 
 bool Cli::isVersionSwitch(_TCHAR* arg) {
