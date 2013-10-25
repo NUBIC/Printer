@@ -20,15 +20,39 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
 /**
  * Interprets the arguments passed on the command-line.
  *
- * When /json switch is used the results are returned in
- * JSON.
+ * Example 1 (Printing)
+ *
+ *   => Printer.exe "HP Inkjet" "doc.txt"
+ *
+ *   argv[0] = "Printer.exe" (Executable)
+ *   argv[1] = "HP Inkjet"   (Printer Name)
+ *   argv[2] = "doc.txt"     (Document Name)
+ *
+ * Example 2 (Printing and returning a JSON status)
+ *
+ *   => Printer.exe /json "HP Inkjet" "doc.txt"
+ *
+ *   argv[0] = "Printer.exe" (Executable)
+ *   argv[1] = "\json"       (Switch)
+ *   argv[1] = "HP Inkjet"   (Printer Name)
+ *   argv[2] = "doc.txt"     (Document Name)
+ *
+ * Also, switches can be used to change the behavior Printer.exe
  * 
- * e.g.
- * => Printer.exe /json "HP InkJet" my.doc
- * => { "status":"success", print_job_identifier:123 }
- * =>
- * => Printer.exe /json "HP InkJet" badfile.doc
- * => { "status":"failure", "message":"File does not exist"}
+ * /json
+ *   The JSON Switch returns results in JSON
+ * 
+ *   => Printer.exe /json "HP InkJet" my.doc
+ *   => { "status":"success", print_job_identifier:123 }
+ *   =>
+ *   => Printer.exe /json "HP InkJet" badfile.doc
+ *   => { "status":"failure", "message":"File does not exist"}
+ *
+ * /version
+ *   The version switch displays the version of the application
+ *
+ * /h
+ *   The help switch prints a help message of how to use the application
  *
  */
 void Cli::run() {
