@@ -38,7 +38,10 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
  *   argv[2] = "doc.txt"     (Document Name)
  *
  * Also, switches can be used to change the behavior Printer.exe
- * 
+ *
+ * /help
+ *   The help switch prints a help message of how to use the application
+ *
  * /json
  *   The JSON Switch returns results in JSON
  * 
@@ -51,8 +54,6 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
  * /version
  *   The version switch displays the version of the application
  *
- * /help
- *   The help switch prints a help message of how to use the application
  *
  */
 void Cli::run() {
@@ -116,8 +117,8 @@ void Cli::help() {
 	wcout << endl;
 	wcout << "Sends a file to a printer and queries it's status" << endl;
 	wcout << endl;
-	wcout << "PRINTER [/h] [/json] [/version] <printer> <file>" << endl;
-	wcout << "\t" << "/h" << "\t\t" << "Displays this help message" << endl;
+	wcout << "PRINTER [/help] [/json] [/version] <printer> <file>" << endl;
+	wcout << "\t" << "/help" << "\t\t" << "Displays this help message" << endl;
 	wcout << "\t" << "/json" << "\t\t" << "Displays results in JSON" << endl;
 	wcout << "\t" << "/version" << "\t" << "Displays version information" << endl;
 	wcout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
