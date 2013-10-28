@@ -7,6 +7,8 @@
 #include "SpoolStatus.h"
 #include "SpoolException.h"
 #include "Version.h"
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -46,14 +48,22 @@ Cli::Cli(int argc, _TCHAR* argv[]) {
  *   The JSON Switch returns results in JSON
  * 
  *   => Printer.exe /json "HP InkJet" my.doc
- *   => { "status":"success", print_job_identifier:123 }
+ *   => { "status":"spooling", "job_id":123, "message":"The print job is spooling to the printer" }
  *   =>
  *   => Printer.exe /json "HP InkJet" badfile.doc
  *   => { "status":"failure", "message":"File does not exist"}
  *
+ * /job:xxx
+ *   The job switch displays the status of the specified print job.
+ *
+ *   => Printer.exe /job:321
+ *   => { "status":"complete", "job_id":123, "message":"The print job is complete"}
+ *
+ *   => Printer.exe /job:999
+ *   => { "status":"offline", "job_id":999, "message":"The printer is offline"}
+ *
  * /version
  *   The version switch displays the version of the application
- *
  *
  */
 void Cli::run() {
@@ -72,6 +82,11 @@ void Cli::run() {
 			version();
 			return;
 		}
+		if (isJobSwitch(arg1)) {
+			_TCHAR* arg2 = argv[2];
+			DWORD jobId = extractJobIdFromJobSwitch(arg1);
+			spooler->queryPrintJob((LPSTR) arg2, jobId);
+		}
 	}
 	
 	if (argc > 2) {
@@ -82,7 +97,7 @@ void Cli::run() {
 				SpoolStatus* s = spooler->spool(printer, file);
 				if (containsJsonSwitch(argc, argv)) {
 					char* status = s->getStatus();
-					wcout << "{\"status\":\"" << status << "\", \"print_job_identifier\":"<< s-> getPrintJobIdentifier() << "}";
+					wcout << "{\"status\":\"" << status << "\", \"job_id\":"<< s-> getPrintJobIdentifier() << "}";
 				} else {
 					wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;
 					wcout << "Job identifier is '" << s->getPrintJobIdentifier() << "'" << endl;
@@ -113,6 +128,19 @@ bool Cli::isVersionSwitch(_TCHAR* arg) {
 	return _wcsicmp(arg,L"/version") == 0;
 }
 
+bool Cli::isJobSwitch(_TCHAR* arg) {
+	return _wcsnicmp(arg,L"/job", 4) == 0;
+}
+
+DWORD Cli::extractJobIdFromJobSwitch(_TCHAR* arg) {
+	wchar_t* context = NULL;
+	_TCHAR seps[] = L":";
+	_TCHAR* jobStr = wcstok_s(_wcsdup(arg), seps, &context);
+	DWORD tmp = NULL;
+	std::wstringstream(context) >> tmp;
+	return tmp;
+}
+
 void Cli::help() {
 	wcout << endl;
 	wcout << "Sends a file to a printer and queries it's status" << endl;
@@ -121,6 +149,7 @@ void Cli::help() {
 	wcout << "\t" << "/help" << "\t\t" << "Displays this help message" << endl;
 	wcout << "\t" << "/json" << "\t\t" << "Displays results in JSON" << endl;
 	wcout << "\t" << "/version" << "\t" << "Displays version information" << endl;
+	wcout << "\t" << "/job:xxx" << "\t" << "Displays status of print job" << endl;
 	wcout << "\t" << "<printer>" << "\t" << "The printer which will print the file" << endl;
 	wcout << "\t" << "<file>" << "\t\t" << "The file to be printed" << endl;
 }

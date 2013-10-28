@@ -56,7 +56,7 @@ namespace Printer_Test
 				L"../Printer_Test/valid.txt"
 			};
 			runCli(argv, 4, new FakeSpooler());
-			expectOutput( L"{\"status\":\"success\", \"print_job_identifier\":123}");
+			expectOutput( L"{\"status\":\"success\", \"job_id\":123}");
 		}
 
 		TEST_METHOD(TestSpoolFailureWithJsonSwitch) {
@@ -79,6 +79,29 @@ namespace Printer_Test
 			};
 			runCli(argv, 4, new FakeSpooler());
 			expectOutput( L"{\"status\":\"failure\", \"message\":\"Failed to open the file 'invalid.txt'\"}");
+		}
+
+		TEST_METHOD(TestIsJobSwitch) {
+			Cli* s = new Cli(0,NULL);
+			s->isJobSwitch(L"/job:123");
+		}
+
+		TEST_METHOD(TestExtractJobIdFromJobSwitch) {
+			Cli* s = new Cli(0,NULL);
+			DWORD actual = s->extractJobIdFromJobSwitch(L"/job:123");
+			Assert::AreEqual((DWORD) 123, actual);
+		}
+
+		TEST_METHOD(TestExtractJobIdFromJobSwitchWhenNonNumericJobId) {
+			Cli* s = new Cli(0,NULL);
+			DWORD actual = s->extractJobIdFromJobSwitch(L"/job:123XXX");
+			Assert::AreEqual((DWORD) 123, actual);
+		}
+
+		TEST_METHOD(TestExtractJobIdFromJobSwitchWhenMissingJobId) {
+			Cli* s = new Cli(0,NULL);
+			DWORD actual = s->extractJobIdFromJobSwitch(L"/job");
+			Assert::AreEqual((DWORD) 0, actual);
 		}
 
 		/* Helper Methods */

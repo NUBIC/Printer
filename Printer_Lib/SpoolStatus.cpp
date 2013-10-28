@@ -16,5 +16,5 @@ bool SpoolStatus::isSuccessfull() {
 }
 
 char* SpoolStatus::getStatus() {
-	return this->isSuccessfull() ? "success" : "failure";
+	return this->isSuccessfull() ? "spooling" : "failure";
 }

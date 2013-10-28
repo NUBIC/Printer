@@ -7,3 +7,7 @@ SpoolStatus* FakeSpooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	SpoolStatus* s = new SpoolStatus(123);
 	return s;
 }
+
+SpoolStatus* FakeSpooler::queryPrintJob(LPSTR printerName, DWORD jobId) {
+	return NULL;
+}

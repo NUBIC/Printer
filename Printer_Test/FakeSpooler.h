@@ -5,7 +5,7 @@
 class FakeSpooler : public SpoolerInterface
 {
 public:
-	//FakeSpooler(void);
 	SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath);
+	SpoolStatus* queryPrintJob(LPSTR printerName, DWORD jobId);
 };
 

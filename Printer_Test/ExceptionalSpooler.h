@@ -7,6 +7,6 @@ class ExceptionalSpooler : public SpoolerInterface
 {
 public:
 	SpoolStatus* spool(LPTSTR printerName, LPTSTR filePath);
-
+	SpoolStatus* queryPrintJob(LPSTR printerName, DWORD jobId);
 };
 

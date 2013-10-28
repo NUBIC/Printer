@@ -92,6 +92,10 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	return new SpoolStatus(printJobIdentifier);
 }
 
+SpoolStatus* Spooler::queryPrintJob(LPSTR printerName, DWORD jobId) {
+	return NULL;
+}
+
 /*
  // Check Status
  printerHandle = NULL;
@@ -127,6 +131,5 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 				cout << "Failed" << endl;
 			}
 		}
-		cin.get();
 	}
 */
