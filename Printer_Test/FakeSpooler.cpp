@@ -4,7 +4,7 @@
 
 
 SpoolStatus* FakeSpooler::spool(LPTSTR printerName, LPTSTR filePath) {
-	SpoolStatus* s = new SpoolStatus(123);
+	SpoolStatus* s = new SpoolStatus(SpoolStatusEnum::Enum::SPOOLING, 123);
 	return s;
 }
 

@@ -56,7 +56,7 @@ namespace Printer_Test
 				L"../Printer_Test/valid.txt"
 			};
 			runCli(argv, 4, new FakeSpooler());
-			expectOutput( L"{\"status\":\"success\", \"job_id\":123}");
+			expectOutput( L"{\"status\":\"spooling\", \"job_id\":123}");
 		}
 
 		TEST_METHOD(TestSpoolFailureWithJsonSwitch) {

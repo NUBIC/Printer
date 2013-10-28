@@ -96,7 +96,7 @@ void Cli::run() {
 			try {
 				SpoolStatus* s = spooler->spool(printer, file);
 				if (containsJsonSwitch(argc, argv)) {
-					char* status = s->getStatus();
+					LPTSTR status = s->getStatus();
 					wcout << "{\"status\":\"" << status << "\", \"job_id\":"<< s-> getPrintJobIdentifier() << "}";
 				} else {
 					wcout << "Successfully spooled '"<< file << "' to printer '" << printer << "'"<< endl;

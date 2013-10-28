@@ -85,6 +85,7 @@
     <ClInclude Include="SpoolerInterface.h" />
     <ClInclude Include="SpoolException.h" />
     <ClInclude Include="SpoolStatus.h" />
+    <ClInclude Include="SpoolStatusEnum.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -92,6 +93,7 @@
     <ClCompile Include="Cli.cpp" />
     <ClCompile Include="Spooler.cpp" />
     <ClCompile Include="SpoolStatus.cpp" />
+    <ClCompile Include="SpoolStatusEnum.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

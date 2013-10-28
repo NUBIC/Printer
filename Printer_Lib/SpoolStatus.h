@@ -1,16 +1,18 @@
 #pragma once
 
 #include <Windows.h>
+#include "SpoolStatusEnum.h"
 
 class SpoolStatus
 {
 private:
+	SpoolStatusEnum::Enum status;
 	DWORD printJobIdentifier;
 public:
-	SpoolStatus(DWORD printJobIdentifier);
+	SpoolStatus(SpoolStatusEnum::Enum status, DWORD printJobIdentifier);
 
 	DWORD getPrintJobIdentifier();
-	char* getStatus();
+	LPTSTR getStatus();
 	bool isSuccessfull();
 };
 

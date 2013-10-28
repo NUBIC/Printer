@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "SpoolStatus.h"
+#include "SpoolStatusEnum.h"
 
 
-SpoolStatus::SpoolStatus(DWORD printJobIdentifier) {
+SpoolStatus::SpoolStatus(SpoolStatusEnum::Enum status, DWORD printJobIdentifier) {
+	this->status = status;
 	this->printJobIdentifier = printJobIdentifier;
 }
 
@@ -12,9 +14,9 @@ DWORD SpoolStatus::getPrintJobIdentifier() {
 }
 
 bool SpoolStatus::isSuccessfull() {
-	return this->printJobIdentifier != NULL;
+	return !(this->status == SpoolStatusEnum::Enum::FAILURE);
 }
 
-char* SpoolStatus::getStatus() {
-	return this->isSuccessfull() ? "spooling" : "failure";
+LPTSTR SpoolStatus::getStatus() {
+	return SpoolStatusEnum::toString(this->status);
 }

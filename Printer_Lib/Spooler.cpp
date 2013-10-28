@@ -4,6 +4,7 @@
 #include "Spooler.h"
 #include "SpoolException.h"
 #include "SpoolStatus.h"
+#include "SpoolStatusEnum.h"
 
 using namespace std;
 
@@ -89,7 +90,7 @@ SpoolStatus* Spooler::spool(LPTSTR printerName, LPTSTR filePath) {
 	EndDocPrinter(printerHandle);
 	ClosePrinter(printerHandle);
 
-	return new SpoolStatus(printJobIdentifier);
+	return new SpoolStatus(SpoolStatusEnum::Enum::SPOOLING, printJobIdentifier);
 }
 
 SpoolStatus* Spooler::queryPrintJob(LPSTR printerName, DWORD jobId) {
